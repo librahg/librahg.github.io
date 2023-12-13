@@ -175,6 +175,9 @@
 
       window.onload = function () {
         var savedScore = localStorage.getItem("score");
+        if(savedScore == null){
+          savedScore == 0;
+        }
         document.getElementById(
           "score-count"
         ).innerHTML = `환경 점수: ${savedScore}`;
