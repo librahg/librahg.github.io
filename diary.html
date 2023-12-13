@@ -174,16 +174,13 @@
       };
 
       window.onload = function () {
-        window.onload = function () {
         var savedScore = localStorage.getItem("score");
         if (savedScore === null) {
-          savedScore = 0; 
-          localStorage.setItem("score", savedScore); 
+          savedScore = 0;
+          localStorage.setItem("score", savedScore);
         }
 
-        document.getElementById(
-          "score-count"
-        ).innerHTML = `환경 점수: ${savedScore}`;
+        document.getElementById("score-count").innerHTML = `환경 점수: ${savedScore}`;
 
         loadDiary();
       };
