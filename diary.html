@@ -176,6 +176,20 @@
 
     <script>
       window.onload = function () {
+        var buttons = document.getElementsByTagName("button");
+
+        for (let i = 0; i < buttons.length; i++) {
+          buttons[i].addEventListener("mousedown", function () {
+            onMouseDown(this);
+          });
+          buttons[i].addEventListener("mouseout", function () {
+            onMouseOutOrUp(this);
+          });
+          buttons[i].addEventListener("mouseup", function () {
+            onMouseOutOrUp(this);
+          });
+        }
+
         var savedScore = localStorage.getItem("score");
         if (savedScore === null) {
           savedScore = 0;
