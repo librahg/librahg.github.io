@@ -61,27 +61,6 @@
         margin-right: 10%;
       }
     </style>
-  </head>
-
-  <body>
-    <script src="script.js"></script>
-    <div id="app-bar">
-      <button onclick="onBackClicked()">뒤로 가기</button>
-      <span id="title">
-        202202918 이희건 웹 프로그래밍 프로젝트<br />Diary Page
-      </span>
-      <span id="score-count">환경 점수: 0</span>
-    </div>
-
-    <div id="body">
-      <div id="diary-input">
-        <textarea id="date-entry" placeholder="날짜를 입력하세요"></textarea>
-        <textarea id="diary-entry" placeholder="일기를 작성해보세요"></textarea>
-        <button class="button" onclick="saveDiary()">일기 저장</button>
-      </div>
-
-      <div id="diary-entries"></div>
-    </div>
 
     <script>
       var saveDiary = () => {
@@ -172,7 +151,30 @@
           diaryEntries.insertBefore(diaryElementDiv, diaryEntries.firstChild);
         });
       };
+    </ script>
+  </head>
 
+  <body>
+    <script src="script.js"></script>
+    <div id="app-bar">
+      <button onclick="onBackClicked()">뒤로 가기</button>
+      <span id="title">
+        202202918 이희건 웹 프로그래밍 프로젝트<br />Diary Page
+      </span>
+      <span id="score-count">환경 점수: 0</span>
+    </div>
+
+    <div id="body">
+      <div id="diary-input">
+        <textarea id="date-entry" placeholder="날짜를 입력하세요"></textarea>
+        <textarea id="diary-entry" placeholder="일기를 작성해보세요"></textarea>
+        <button class="button" onclick="saveDiary()">일기 저장</button>
+      </div>
+
+      <div id="diary-entries"></div>
+    </div>
+
+    <script>
       window.onload = function () {
         var savedScore = localStorage.getItem("score");
         if (savedScore === null) {
