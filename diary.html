@@ -151,7 +151,7 @@
           diaryEntries.insertBefore(diaryElementDiv, diaryEntries.firstChild);
         });
       };
-    </ script>
+    </script>
   </head>
 
   <body>
@@ -182,7 +182,9 @@
           localStorage.setItem("score", savedScore);
         }
 
-        document.getElementById("score-count").innerHTML = `환경 점수: ${savedScore}`;
+        document.getElementById(
+          "score-count"
+        ).innerHTML = `환경 점수: ${savedScore}`;
 
         loadDiary();
       };
