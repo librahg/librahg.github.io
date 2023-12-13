@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Diary 페이지</title>
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      #score-count {
+        margin-right: 20px;
+      }
+
+      #body {
+        text-align: left;
+      }
+
+      textarea {
+        font-family: "font";
+        display: block;
+        margin-left: 10%;
+        margin-bottom: 20px;
+      }
+
+      #date-entry {
+        width: 200px;
+        height: 40px;
+        resize: none;
+        font-size: 20px;
+      }
+
+      #diary-entry {
+        width: 80%;
+        height: 100px;
+        resize: none;
+        font-size: 20px;
+      }
+
+      #diary-input button {
+        display: block;
+        margin-left: 10%;
+        margin-bottom: 50px;
+      }
+
+      .diary-element {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-left: 10%;
+      }
+
+      .diary-element div {
+        display: inline;
+        text-align: left;
+        border-radius: 10px;
+        border: solid 1px black;
+        margin-top: 20px;
+        padding: 20px;
+      }
+      .diary-element button {
+        display: inline;
+        margin-right: 10%;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script src="script.js"></script>
+    <div id="app-bar">
+      <button onclick="onBackClicked()">뒤로 가기</button>
+      <span id="title">
+        202202918 이희건 웹 프로그래밍 프로젝트<br />Diary Page
+      </span>
+      <span id="score-count">환경 점수: 0</span>
+    </div>
+
+    <div id="body">
+      <div id="diary-input">
+        <textarea id="date-entry" placeholder="날짜를 입력하세요"></textarea>
+        <textarea id="diary-entry" placeholder="일기를 작성해보세요"></textarea>
+        <button class="button" onclick="saveDiary()">일기 저장</button>
+      </div>
+
+      <div id="diary-entries"></div>
+    </div>
+
+    <script>
+      var saveDiary = () => {
+        var dateText = document.getElementById("date-entry").value;
+        var diaryText = document.getElementById("diary-entry").value;
+
+        if (dateText.trim() !== "" && diaryText.trim() !== "") {
+          var diaryEntry = {
+            date: dateText,
+            text: diaryText,
+          };
+
+          var diariesFromLocalStorage = localStorage.getItem("diaries");
+
+          if (diariesFromLocalStorage !== null) {
+            storedDiaries = JSON.parse(diariesFromLocalStorage);
+          } else {
+            storedDiaries = [];
+          }
+          storedDiaries.push(diaryEntry);
+          localStorage.setItem("diaries", JSON.stringify(storedDiaries));
+
+          document.getElementById("date-entry").value = "";
+          document.getElementById("diary-entry").value = "";
+
+          var savedScore = localStorage.getItem("score");
+          if (savedScore !== null) {
+            savedScore = parseInt(savedScore) + 1;
+          } else {
+            savedScore = 1;
+          }
+
+          localStorage.setItem("score", JSON.stringify(savedScore));
+
+          document.getElementById(
+            "score-count"
+          ).innerHTML = `환경 점수: ${savedScore}`;
+
+          loadDiary();
+        }
+      };
+
+      var deleteDiary = (index) => {
+        var diariesFromLocalStorage = localStorage.getItem("diaries");
+
+        if (diariesFromLocalStorage !== null) {
+          storedDiaries = JSON.parse(diariesFromLocalStorage);
+        } else {
+          storedDiaries = [];
+        }
+        storedDiaries.splice(index, 1);
+        localStorage.setItem("diaries", JSON.stringify(storedDiaries));
+
+        loadDiary();
+      };
+
+      var loadDiary = () => {
+        var diaryEntries = document.getElementById("diary-entries");
+        diaryEntries.innerHTML = "";
+
+        var diariesFromLocalStorage = localStorage.getItem("diaries");
+
+        if (diariesFromLocalStorage !== null) {
+          storedDiaries = JSON.parse(diariesFromLocalStorage);
+        } else {
+          storedDiaries = [];
+        }
+
+        storedDiaries.forEach(function (diary, index) {
+          var diaryElementDiv = document.createElement("div");
+          diaryElementDiv.classList.add("diary-element");
+          var diaryDiv = document.createElement("div");
+          var dateP = document.createElement("p");
+          var textP = document.createElement("p");
+          var deleteButton = document.createElement("button");
+
+          dateP.textContent = `${diary.date}`;
+          textP.textContent = `${diary.text}`;
+          deleteButton.textContent = "삭제";
+          deleteButton.onclick = function () {
+            deleteDiary(index);
+          };
+
+          diaryDiv.appendChild(dateP);
+          diaryDiv.appendChild(textP);
+          diaryElementDiv.appendChild(diaryDiv);
+          diaryElementDiv.appendChild(deleteButton);
+          diaryEntries.insertBefore(diaryElementDiv, diaryEntries.firstChild);
+        });
+      };
+
+      window.onload = function () {
+        var savedScore = localStorage.getItem("score");
+        document.getElementById(
+          "score-count"
+        ).innerHTML = `환경 점수: ${savedScore}`;
+
+        loadDiary();
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Eco Friendly Products 페이지</title>
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      #body {
+        text-align: left;
+        padding-bottom: 0px;
+      }
+
+      #sorting {
+        width: 200px;
+        height: 50px;
+        font-size: 20px;
+      }
+
+      .product {
+        display: flex;
+        margin: 70px;
+        cursor: pointer;
+      }
+
+      img {
+        display: inline-block;
+      }
+
+      .product-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        font-size: 22px;
+        margin-left: 30px;
+      }
+    </style>
+
+    <script>
+      var products = [
+        {
+          name: "슈가버블 친환경 주방세제 레몬 크러쉬 2.5L, 1개",
+          price: 8820,
+          rate: 4.5,
+          image: "../images/eco_detergent.png",
+          link: "https://www.coupang.com/vp/products/7136884232?itemId=18998815334&vendorItemId=3793551130&pickType=COU_PICK&q=%EC%B9%9C%ED%99%98%EA%B2%BD+%EC%A3%BC%EB%B0%A9%EC%84%B8%EC%A0%9C&itemsCount=36&searchId=0874b59c5c7747858c25a43ef40d94b2&rank=1&isAddedCart=",
+        },
+        {
+          name: "슈가랩 친환경 빨대 대",
+          price: 19600,
+          rate: 5.0,
+          image: "../images/eco_straw.png",
+          link: "https://www.coupang.com/vp/products/233526241?itemId=747299666&vendorItemId=4886600208&pickType=COU_PICK&q=%EC%B9%9C%ED%99%98%EA%B2%BD+%EB%B9%A8%EB%8C%80&itemsCount=36&searchId=0bdcf0a964ff43f88fcf740aec942fb5&rank=1&isAddedCart=",
+        },
+        {
+          name: "코디 에코그린 바스티슈 롤화장지 30m",
+          price: 17900,
+          rate: 4.3,
+          image: "../images/eco_tissue.png",
+          link: "https://www.coupang.com/vp/products/42063727?itemId=152860518&vendorItemId=83824540281&q=%EC%B9%9C%ED%99%98%EA%B2%BD+%ED%9C%B4%EC%A7%80&itemsCount=36&searchId=6904b3830e1d4e21b26516382fdbb9f6&rank=2&isAddedCart=",
+        },
+        {
+          name: "올솝메이트 제로웨이스트 친환경 헤어 비누 샴푸바 린스바",
+          price: 5900,
+          rate: 4.7,
+          image: "../images/eco_soap.png",
+          link: "https://www.coupang.com/vp/products/6711869230?itemId=15584650429&vendorItemId=82803665147&q=%EC%B9%9C%ED%99%98%EA%B2%BD&itemsCount=36&searchId=175060da47c34abda988894525765507&rank=3&isAddedCart=",
+        },
+        {
+          name: "[무료배송]무지 크라프트 친환경 쇼핑백(6종) 100매",
+          price: 21700,
+          rate: 4.2,
+          image: "../images/eco_shopping_bag.png",
+          link: "https://www.coupang.com/vp/products/6716396042?itemId=15609613835&vendorItemId=71319938822&q=%EC%B9%9C%ED%99%98%EA%B2%BD&itemsCount=36&searchId=ce38202ca137468fa8f0a2e0a6379249&rank=14&isAddedCart=",
+        },
+      ];
+    </script>
+  </head>
+
+  <body>
+    <script src="script.js"></script>
+
+    <div id="app-bar">
+      <button onclick="onBackClicked()">뒤로 가기</button>
+      <span id="title">
+        202202918 이희건 웹 프로그래밍 프로젝트<br />EcoFriendly Products Page
+      </span>
+      <button onclick="onDiaryClicked()">환경 일기 작성</button>
+    </div>
+
+    <div id="body">
+      <select id="sorting">
+        <option value="type1">정렬 기준 없음</option>
+        <option value="type2">가격 낮은 순</option>
+        <option value="type3">가격 높은 순</option>
+        <option value="type4">평점</option>
+      </select>
+
+      <div id="product-list"></div>
+
+      <hr style="margin-bottom: 20px" />
+    </div>
+
+    <div style="text-align: center; margin-bottom: 100px">
+      <a href="#app-bar" class="link">맨 위로</a>
+    </div>
+
+    <script>
+      var renderProducts = (option) => {
+        var productList = document.getElementById("product-list");
+
+        switch (option) {
+          case "type2":
+            products.sort((a, b) => a.price - b.price);
+            break;
+          case "type3":
+            products.sort((a, b) => b.price - a.price);
+            break;
+          case "type4":
+            products.sort((a, b) => b.rate - a.rate);
+            break;
+          default:
+            break;
+        }
+
+        productList.innerHTML = "";
+
+        products.forEach((product) => {
+          var productDiv = document.createElement("div");
+          productDiv.classList.add("product");
+
+          var img = document.createElement("img");
+          img.src = product.image;
+          productDiv.appendChild(img);
+
+          var infoDiv = document.createElement("div");
+          infoDiv.classList.add("product-info");
+
+          var name = document.createElement("p");
+          name.textContent = product.name;
+          infoDiv.appendChild(name);
+
+          var price = document.createElement("p");
+          price.textContent = `가격: ${product.price}원`;
+          infoDiv.appendChild(price);
+
+          var rate = document.createElement("p");
+          rate.textContent = `평점: ${product.rate}`;
+          infoDiv.appendChild(rate);
+
+          productDiv.addEventListener("click", function () {
+            window.open(product.link, "_blank");
+          });
+
+          productDiv.appendChild(infoDiv);
+          productList.appendChild(productDiv);
+        });
+      };
+
+      document
+        .getElementById("sorting")
+        .addEventListener("change", function (event) {
+          var selectedOption = event.target.value;
+          renderProducts(selectedOption);
+        });
+
+      window.onload = function () {
+        renderProducts("type1");
+      };
+    </script>
+  </body>
+</html>

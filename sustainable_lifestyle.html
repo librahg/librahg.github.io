@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sustainable Lifestyle 페이지</title>
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      a {
+        display: block;
+        margin-bottom: 20px;
+        font-weight: lighter;
+      }
+    </style>
+  </head>
+
+  <body>
+    <script src="script.js"></script>
+
+    <div id="app-bar">
+      <button onclick="onBackClicked()">뒤로 가기</button>
+      <span id="title">
+        202202918 이희건 웹 프로그래밍 프로젝트<br />Sustainable Lifestyle Page
+      </span>
+      <button onclick="onDiaryClicked()">환경 일기 작성</button>
+    </div>
+
+    <div id="body">
+      <div style="display: flex; align-items: center; justify-content: center">
+        <button
+          onclick="moveImagesBackward(); changeText()"
+          class="button"
+          style="
+            width: 60px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <h1>←</h1>
+        </button>
+
+        <canvas
+          id="canvas"
+          width="500"
+          height="500"
+          style="margin: 50px"
+        ></canvas>
+
+        <button
+          onclick="moveImagesForward(); changeText()"
+          class="button"
+          style="
+            width: 60px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <h1>→</h1>
+        </button>
+      </div>
+
+      <div id="explanation" style="margin-bottom: 80px">
+        일회용 플라스틱 컵 대신 재사용성이 높은 텀블러를 이용해 환경을 보호할 수
+        있습니다.
+      </div>
+
+      <script>
+        var canvas = document.getElementById("canvas");
+        var context = canvas.getContext("2d");
+        var images = [
+          "../images/tumbler.png",
+          "../images/ecobag.png",
+          "../images/recycle.png",
+          "../images/public_transportation.png",
+        ];
+        var currentImageIndex = 0;
+
+        var loadImages = () => {
+          images = images.map((src) => {
+            var img = new Image();
+            img.onload = () => {
+              drawImages();
+            };
+            img.src = src;
+            return img;
+          });
+        };
+
+        var drawImages = () => {
+          context.clearRect(0, 0, canvas.width, canvas.height);
+          var currentImage = images[currentImageIndex];
+          context.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
+        };
+
+        var moveImagesForward = () => {
+          currentImageIndex = (currentImageIndex + 1) % images.length;
+          drawImages();
+        };
+
+        var moveImagesBackward = () => {
+          currentImageIndex = (currentImageIndex + 3) % images.length;
+          drawImages();
+        };
+
+        loadImages();
+
+        var changeText = () => {
+          var explanation = document.getElementById("explanation");
+          switch (currentImageIndex) {
+            case 0:
+              explanation.innerHTML =
+                "일회용 플라스틱 컵 대신 재사용성이 높은 텀블러를 이용해 환경을 보호할 수 있습니다.";
+              break;
+            case 1:
+              explanation.innerHTML =
+                "자연 환경에서 잘 분해되는 물질로 만들어진 에코백은 쓰레기가 배출하는 온실가스를 줄일 뿐만 아니라 일회용품 소비 감소에도 기여합니다.";
+              break;
+            case 2:
+              explanation.innerHTML =
+                "재활용은 분해되기 어려운 물건을 폐기 처리하지 않고 효율적으로 재사용해 쓰레기 처리로부터 배출되는 온실가스를 줄이는 지속 가능한 습관입니다.";
+              break;
+            case 3:
+              explanation.innerHTML =
+                "개인 이동수단이 아닌 대중교통을 이용함으로써 온실가스 배출을 최소화할 수 있습니다.";
+              break;
+          }
+        };
+      </script>
+
+      <h3 style="margin-bottom: 20px">도움이 될 웹 사이트</h3>
+
+      <a
+        href="https://www.unep.org/explore-topics/resource-efficiency/what-we-do/sustainable-lifestyles"
+        class="link"
+        >UN environment programme
+      </a>
+      <a
+        href="https://www.hyundai.com/worldwide/ko/brand-journal/lifestyle/the-7-rs-of-sustainable-living"
+        class="link"
+        >Hyundai Brand Journal
+      </a>
+    </div>
+  </body>
+</html>
